@@ -55,6 +55,9 @@ namespace RocksDBTool.Tests
         public void LoadThrowsExceptionIfMissing()
         {
             Assert.Throws<RocksDbException>(() => _rocksDbService.Load());
+
+            _configuration[RocksDbService.CurrentRocksDbPathKey] = null;
+            Assert.Throws<ArgumentNullException>(() => _rocksDbService.Load());
         }
 
         public void Dispose()

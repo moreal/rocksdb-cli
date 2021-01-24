@@ -1,4 +1,5 @@
 #nullable enable
+using System;
 using Microsoft.Extensions.Configuration;
 using RocksDbSharp;
 
@@ -6,23 +7,30 @@ namespace RocksDBTool
 {
     public class RocksDbService : IRocksDbService
     {
-        private readonly DbOptions _options;
+        private readonly IConfiguration _configuration;
 
-        private readonly string _currentRocksDbPath;
+        private readonly DbOptions _options;
 
         public const string CurrentRocksDbPathKey = "current_rocks_db_path";
 
+        public string CurrentRocksDbPath => _configuration[CurrentRocksDbPathKey];
+
         public RocksDbService(IConfiguration configuration)
         {
-            _currentRocksDbPath = configuration[CurrentRocksDbPathKey];
+            _configuration = configuration;
             _options = new DbOptions();
         }
 
         public RocksDb Load()
         {
+            if (CurrentRocksDbPath is null)
+            {
+                throw new ArgumentNullException(nameof(CurrentRocksDbPath));
+            }
+
             return RocksDb.Open(
                 _options,
-                _currentRocksDbPath);   
+                CurrentRocksDbPath);   
         }
     }
 }
