@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace RocksDBTool
 {
-    class Program
+    internal static class Program
     {
         static async Task Main(string[] args)
         {
