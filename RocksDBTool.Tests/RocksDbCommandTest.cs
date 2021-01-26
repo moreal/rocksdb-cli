@@ -56,13 +56,21 @@ namespace RocksDBTool.Tests
         }
         
         [Theory]
-        [InlineData(InputOutputFormat.String, "foo", "bar", 0)]
-        [InlineData(InputOutputFormat.Base64, "3q0=", "vu8=", 0)]
-        public void Set(InputOutputFormat inputOutputFormat, string key, string value, int expectedReturnCode)
+        [InlineData("foo", "bar", 0)]
+        public void SetWithString(string key, string value, int expectedReturnCode)
         {
-            Assert.Equal(expectedReturnCode, _command.Set(inputOutputFormat, key, value));
+            Assert.Equal(expectedReturnCode, _command.Set(InputOutputFormat.String, key, value));
             using var db = _rocksDbService.Load();
             Assert.Equal(value, db.Get(key));
+        }
+        
+        [Theory]
+        [InlineData("3q0=", "vu8=", 0)]
+        public void SetWithBase64(string key, string value, int expectedReturnCode)
+        {
+            Assert.Equal(expectedReturnCode, _command.Set(InputOutputFormat.Base64, key, value));
+            using var db = _rocksDbService.Load();
+            Assert.Equal(Convert.FromBase64String(value), db.Get(Convert.FromBase64String(key)));
         }
 
         private void SetupRocksDb(string path, IEnumerable<KeyValuePair<string, string>> pairs)
