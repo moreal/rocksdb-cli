@@ -40,16 +40,10 @@ namespace RocksDBTool
                         break;
                 }
             }
-            catch (RocksDbException e)
+            catch (Exception e)
             {
                 // FIXME: should be written into stderr instead of stdout.
-                _output.WriteLine($"{nameof(RocksDbException)} occurred.");
                 _output.WriteLine(e.Message);
-            }
-            catch (ArgumentNullException e)
-            {
-                // FIXME: should be written into stderr instead of stdout.
-                _output.WriteLine("The configuration seems not configured yet. you ");
             }
 
             return -1;
@@ -72,16 +66,10 @@ namespace RocksDBTool
 
                 return 0;
             }
-            catch (RocksDbException e)
+            catch (Exception e)
             {
                 // FIXME: should be written into stderr instead of stdout.
-                _output.WriteLine($"{nameof(RocksDbException)} occurred.");
                 _output.WriteLine(e.Message);
-            }
-            catch (ArgumentNullException e)
-            {
-                // FIXME: should be written into stderr instead of stdout.
-                _output.WriteLine("The configuration seems not configured yet. you ");
             }
 
             return -1;
