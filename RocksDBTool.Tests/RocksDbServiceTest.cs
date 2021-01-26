@@ -7,7 +7,7 @@ using Xunit;
 
 namespace RocksDBTool.Tests
 {
-    public class RocksDbServiceTest : IDisposable
+    public sealed class RocksDbServiceTest : IDisposable
     {
         private readonly IRocksDbService _rocksDbService;
 

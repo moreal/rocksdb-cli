@@ -2,7 +2,7 @@ using System.IO;
 
 namespace RocksDBTool.Tests
 {
-    public class StringInputOutputErrorContainer : IInputOutputErrorContainer
+    public sealed class StringInputOutputErrorContainer : IInputOutputErrorContainer
     {
         public StringInputOutputErrorContainer(StringReader @in, StringWriter error, StringWriter @out)
         {

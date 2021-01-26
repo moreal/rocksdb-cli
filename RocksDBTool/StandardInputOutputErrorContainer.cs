@@ -3,7 +3,7 @@ using System.IO;
 
 namespace RocksDBTool
 {
-    public class StandardInputOutputErrorContainer : IInputOutputErrorContainer
+    public sealed class StandardInputOutputErrorContainer : IInputOutputErrorContainer
     {
         public TextReader In => Console.In;
 

@@ -4,7 +4,7 @@ using RocksDbSharp;
 
 namespace RocksDBTool
 {
-    public class RocksDbService : IRocksDbService
+    public sealed class RocksDbService : IRocksDbService
     {
         private readonly IConfiguration _configuration;
 

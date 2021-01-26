@@ -9,7 +9,7 @@ using Xunit;
 
 namespace RocksDBTool.Tests
 {
-    public class RocksDbCommandTest
+    public sealed class RocksDbCommandTest
     {
         private readonly IRocksDbService _rocksDbService;
 

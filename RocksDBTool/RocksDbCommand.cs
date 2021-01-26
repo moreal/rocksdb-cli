@@ -5,7 +5,7 @@ using RocksDbSharp;
 
 namespace RocksDBTool
 {
-    public class RocksDbCommand
+    public sealed class RocksDbCommand
     {
         private readonly IInputOutputErrorContainer _inputOutputErrorContainer;
         private readonly IRocksDbService _rocksDbService;
