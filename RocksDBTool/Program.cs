@@ -1,16 +1,15 @@
-﻿#nullable enable
-using System;
-using System.IO;
-using System.Threading.Tasks;
-using Cocona;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
-namespace RocksDBTool
+﻿namespace RocksDBTool
 {
+    using System;
+    using System.IO;
+    using System.Threading.Tasks;
+    using Cocona;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+
     internal static class Program
     {
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
             await CoconaApp.Create().ConfigureServices(
                 services =>

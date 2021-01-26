@@ -1,8 +1,8 @@
-using System;
-using System.IO;
-
 namespace RocksDBTool
 {
+    using System;
+    using System.IO;
+
     public sealed class StandardInputOutputErrorContainer : IInputOutputErrorContainer
     {
         public TextReader In => Console.In;

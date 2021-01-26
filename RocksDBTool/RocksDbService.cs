@@ -1,18 +1,15 @@
-using System;
-using Microsoft.Extensions.Configuration;
-using RocksDbSharp;
-
 namespace RocksDBTool
 {
+    using Microsoft.Extensions.Configuration;
+    using RocksDbSharp;
+
     public sealed class RocksDbService : IRocksDbService
     {
+        public const string CurrentRocksDbPathKey = "current_rocks_db_path";
+
         private readonly IConfiguration _configuration;
 
         private readonly DbOptions _options;
-
-        public const string CurrentRocksDbPathKey = "current_rocks_db_path";
-
-        public string CurrentRocksDbPath => _configuration[CurrentRocksDbPathKey];
 
         public RocksDbService(IConfiguration configuration)
         {
@@ -20,11 +17,13 @@ namespace RocksDBTool
             _options = new DbOptions();
         }
 
+        private string CurrentRocksDbPath => _configuration[CurrentRocksDbPathKey];
+
         public RocksDb Load()
         {
             return RocksDb.Open(
                 _options,
-                CurrentRocksDbPath);   
+                CurrentRocksDbPath);
         }
     }
 }

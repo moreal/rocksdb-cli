@@ -1,10 +1,8 @@
-using System;
-using System.IO;
-using Cocona;
-using RocksDbSharp;
-
 namespace RocksDBTool
 {
+    using System;
+    using Cocona;
+
     public sealed class RocksDbCommand
     {
         private readonly IInputOutputErrorContainer _inputOutputErrorContainer;
@@ -24,19 +22,21 @@ namespace RocksDBTool
                 switch (inputOutputFormat)
                 {
                     case InputOutputFormat.Base64:
-                        if (db.Get(Convert.FromBase64String(key)) is {} bytesValue)
+                        if (db.Get(Convert.FromBase64String(key)) is { } bytesValue)
                         {
-                            _inputOutputErrorContainer.Out.Write(Convert.ToBase64String(bytesValue));   
+                            _inputOutputErrorContainer.Out.Write(Convert.ToBase64String(bytesValue));
                             return 0;
                         }
+
                         break;
 
                     case InputOutputFormat.String:
-                        if (db.Get(key) is {} stringValue)
+                        if (db.Get(key) is { } stringValue)
                         {
-                            _inputOutputErrorContainer.Out.Write(stringValue);   
+                            _inputOutputErrorContainer.Out.Write(stringValue);
                             return 0;
                         }
+
                         break;
                 }
             }

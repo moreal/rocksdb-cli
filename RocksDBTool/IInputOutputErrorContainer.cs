@@ -1,7 +1,7 @@
-using System.IO;
-
 namespace RocksDBTool
 {
+    using System.IO;
+
     public interface IInputOutputErrorContainer
     {
         TextReader In { get; }
