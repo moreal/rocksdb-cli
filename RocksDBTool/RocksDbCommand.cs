@@ -15,12 +15,12 @@ namespace RocksDBTool
             _rocksDbService = rocksDbService;
         }
 
-        public int Get([Argument] string key)
+        public int Get([Argument] InputOutputFormat inputOutputFormat, [Argument] string key)
         {
             throw new NotImplementedException();
         }
 
-        public int Set([Argument] string key, [Argument] string value)
+        public int Set([Argument] InputOutputFormat inputOutputFormat, [Argument] string key, [Argument] string value)
         {
             throw new NotImplementedException();
         }

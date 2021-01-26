@@ -36,7 +36,7 @@ namespace RocksDBTool.Tests
             });
             SetupRocksDb(temporaryDirectory, new Dictionary<byte[], byte[]>
             {
-                [Encoding.ASCII.GetBytes("binary")] = new byte[] { 0xbe, 0xef },
+                [new byte[] { 0xde, 0xad }]  = new byte[] { 0xbe, 0xef },
             });
 
             _rocksDbService = new RocksDbService(configuration);
@@ -45,22 +45,22 @@ namespace RocksDBTool.Tests
         }
         
         [Theory]
-        [InlineData("binary", 0, "\xbe\xef")]
-        [InlineData("string", 0, "foo")]
-        [InlineData("unknown", -1, "")]
-        [InlineData("\x00", -1, "")]
-        public void Get(string key, int expectedReturnCode, string expectedOutput)
+        [InlineData(InputOutputFormat.Base64, "3q0=", 0, "vu8=")]
+        [InlineData(InputOutputFormat.String, "string", 0, "foo")]
+        [InlineData(InputOutputFormat.String, "unknown", -1, "")]
+        [InlineData(InputOutputFormat.Base64, "AA==", -1, "")]
+        public void Get(InputOutputFormat inputOutputFormat, string key, int expectedReturnCode, string expectedOutput)
         {
-            Assert.Equal(expectedReturnCode,_command.Get(key));  // key: binary
+            Assert.Equal(expectedReturnCode,_command.Get(inputOutputFormat, key));  // key: binary
             Assert.Equal(expectedOutput, _stringWriter.ToString());
         }
         
         [Theory]
-        [InlineData("foo", "bar", 0)]
-        [InlineData("\xde\xad", "\xbe\xef", 0)]
-        public void Set(string key, string value, int expectedReturnCode)
+        [InlineData(InputOutputFormat.String, "foo", "bar", 0)]
+        [InlineData(InputOutputFormat.Base64, "3q0=", "vu8=", 0)]
+        public void Set(InputOutputFormat inputOutputFormat, string key, string value, int expectedReturnCode)
         {
-            Assert.Equal(expectedReturnCode, _command.Set(key, value));
+            Assert.Equal(expectedReturnCode, _command.Set(inputOutputFormat, key, value));
             using var db = _rocksDbService.Load();
             Assert.Equal(value, db.Get(key));
         }
