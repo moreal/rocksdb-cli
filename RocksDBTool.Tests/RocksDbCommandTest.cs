@@ -15,7 +15,7 @@ namespace RocksDBTool.Tests
 
         private readonly RocksDbCommand _command;
 
-        private readonly StringWriter _stringWriter;
+        private readonly StringInputOutputErrorContainer _stringInputOutputErrorContainer;
 
         public RocksDbCommandTest()
         {
@@ -39,8 +39,13 @@ namespace RocksDBTool.Tests
             });
 
             _rocksDbService = new RocksDbService(configuration);
-            _stringWriter = new StringWriter();
-            _command = new RocksDbCommand(_stringWriter, _rocksDbService);
+            _stringInputOutputErrorContainer = new StringInputOutputErrorContainer(
+                new StringReader(string.Empty),
+                new StringWriter(),
+                new StringWriter());
+            _command = new RocksDbCommand(
+                _stringInputOutputErrorContainer,
+                _rocksDbService);
         }
         
         [Theory]
@@ -51,7 +56,7 @@ namespace RocksDBTool.Tests
         public void Get(InputOutputFormat inputOutputFormat, string key, int expectedReturnCode, string expectedOutput)
         {
             Assert.Equal(expectedReturnCode,_command.Get(inputOutputFormat, key));  // key: binary
-            Assert.Equal(expectedOutput, _stringWriter.ToString());
+            Assert.Equal(expectedOutput, _stringInputOutputErrorContainer.Out.ToString());
         }
         
         [Theory]

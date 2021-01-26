@@ -7,12 +7,12 @@ namespace RocksDBTool
 {
     public class RocksDbCommand
     {
+        private readonly IInputOutputErrorContainer _inputOutputErrorContainer;
         private readonly IRocksDbService _rocksDbService;
-        private readonly TextWriter _output;
 
-        public RocksDbCommand(TextWriter output, IRocksDbService rocksDbService)
+        public RocksDbCommand(IInputOutputErrorContainer inputOutputErrorContainer, IRocksDbService rocksDbService)
         {
-            _output = output;
+            _inputOutputErrorContainer = inputOutputErrorContainer;
             _rocksDbService = rocksDbService;
         }
 
@@ -26,7 +26,7 @@ namespace RocksDBTool
                     case InputOutputFormat.Base64:
                         if (db.Get(Convert.FromBase64String(key)) is {} bytesValue)
                         {
-                            _output.Write(Convert.ToBase64String(bytesValue));   
+                            _inputOutputErrorContainer.Out.Write(Convert.ToBase64String(bytesValue));   
                             return 0;
                         }
                         break;
@@ -34,7 +34,7 @@ namespace RocksDBTool
                     case InputOutputFormat.String:
                         if (db.Get(key) is {} stringValue)
                         {
-                            _output.Write(stringValue);   
+                            _inputOutputErrorContainer.Out.Write(stringValue);   
                             return 0;
                         }
                         break;
@@ -42,8 +42,7 @@ namespace RocksDBTool
             }
             catch (Exception e)
             {
-                // FIXME: should be written into stderr instead of stdout.
-                _output.WriteLine(e.Message);
+                _inputOutputErrorContainer.Error.WriteLine(e.Message);
             }
 
             return -1;
@@ -68,8 +67,7 @@ namespace RocksDBTool
             }
             catch (Exception e)
             {
-                // FIXME: should be written into stderr instead of stdout.
-                _output.WriteLine(e.Message);
+                _inputOutputErrorContainer.Error.WriteLine(e.Message);
             }
 
             return -1;

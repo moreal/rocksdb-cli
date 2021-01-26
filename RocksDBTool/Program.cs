@@ -16,7 +16,7 @@ namespace RocksDBTool
                 services =>
                 {
                     services.AddTransient<IRocksDbService, RocksDbService>();
-                    services.AddTransient<TextWriter>(serviceProvider => Console.Out);
+                    services.AddTransient<IInputOutputErrorContainer, StandardInputOutputErrorContainer>();
                 }).ConfigureAppConfiguration(
                 (context, builder) =>
                 {
