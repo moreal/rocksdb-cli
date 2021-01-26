@@ -13,8 +13,6 @@ namespace RocksDBTool.Tests
 
         private readonly string _temporaryDirectory;
 
-        private readonly IConfiguration _configuration;
-
         public RocksDbServiceTest()
         {
             _temporaryDirectory = Path.Combine(
@@ -26,8 +24,8 @@ namespace RocksDBTool.Tests
                 {
                     [RocksDbService.CurrentRocksDbPathKey] = _temporaryDirectory,
                 });
-            _configuration = builder.Build();
-            _rocksDbService = new RocksDbService(_configuration);
+            IConfiguration configuration = builder.Build();
+            _rocksDbService = new RocksDbService(configuration);
         }
 
         [Fact]
