@@ -22,11 +22,6 @@ namespace RocksDBTool
 
         public RocksDb Load()
         {
-            if (CurrentRocksDbPath is null)
-            {
-                throw new ArgumentNullException(nameof(CurrentRocksDbPath));
-            }
-
             return RocksDb.Open(
                 _options,
                 CurrentRocksDbPath);   
