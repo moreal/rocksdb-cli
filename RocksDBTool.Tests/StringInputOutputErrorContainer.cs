@@ -1,7 +1,7 @@
-using System.IO;
-
 namespace RocksDBTool.Tests
 {
+    using System.IO;
+
     public sealed class StringInputOutputErrorContainer : IInputOutputErrorContainer
     {
         public StringInputOutputErrorContainer(StringReader @in, StringWriter error, StringWriter @out)
@@ -11,7 +11,7 @@ namespace RocksDBTool.Tests
             Error = error;
         }
 
-        TextReader IInputOutputErrorContainer.In => In; 
+        TextReader IInputOutputErrorContainer.In => In;
 
         TextWriter IInputOutputErrorContainer.Out => Out;
 
