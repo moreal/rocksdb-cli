@@ -7,6 +7,9 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
+    /// <summary>
+    /// The main class to run as entrypoint.
+    /// </summary>
     internal static class Program
     {
         private static async Task Main(string[] args)

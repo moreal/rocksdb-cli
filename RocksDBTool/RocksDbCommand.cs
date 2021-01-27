@@ -3,17 +3,37 @@ namespace RocksDBTool
     using System;
     using Cocona;
 
+    /// <summary>
+    /// A class to handle <see cref="RocksDbSharp.RocksDb"/> in command line.
+    /// </summary>
     public sealed class RocksDbCommand
     {
         private readonly IInputOutputErrorContainer _inputOutputErrorContainer;
         private readonly IRocksDbService _rocksDbService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RocksDbCommand"/> class.
+        /// </summary>
+        /// <param name="inputOutputErrorContainer">A container having writers to write output and error.</param>
+        /// <param name="rocksDbService">A service to load <see cref="RocksDbSharp.RocksDb"/>.</param>
         public RocksDbCommand(IInputOutputErrorContainer inputOutputErrorContainer, IRocksDbService rocksDbService)
         {
             _inputOutputErrorContainer = inputOutputErrorContainer;
             _rocksDbService = rocksDbService;
         }
 
+        /// <summary>
+        /// Gets the value corresponded to <paramref name="key"/> from rocksdb.
+        /// </summary>
+        /// <param name="inputOutputFormat">An format of <paramref name="key"/>.
+        /// If <paramref name="inputOutputFormat"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
+        /// should be base64 encoded value. If <paramref name="inputOutputFormat"/> is
+        /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> as string.</param>
+        /// <param name="key">A key string following <paramref name="inputOutputFormat"/>.
+        /// If <paramref name="inputOutputFormat"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
+        /// should be base64 encoded value. If <paramref name="inputOutputFormat"/> is
+        /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> as string.</param>
+        /// <returns>If it successes, returns 0. If it fails, returns -1.</returns>
         public int Get([Argument] InputOutputFormat inputOutputFormat, [Argument] string key)
         {
             try
@@ -48,6 +68,18 @@ namespace RocksDBTool
             return -1;
         }
 
+        /// <summary>
+        /// Sets the value corresponded to <paramref name="key"/> from rocksdb.
+        /// </summary>
+        /// <param name="inputOutputFormat">An format of <paramref name="key"/> and <paramref name="value"/>.
+        /// If <paramref name="inputOutputFormat"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
+        /// and <paramref name="value"/> should be base64 encoded value. If <paramref name="inputOutputFormat"/> is
+        /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> and <paramref name="value"/> as string.</param>
+        /// <param name="key">A key string following <paramref name="inputOutputFormat"/>,
+        /// to set into <see cref="RocksDbSharp.RocksDb"/> as key.</param>
+        /// <param name="value">A value following <paramref name="inputOutputFormat"/>,
+        /// to set into <see cref="RocksDbSharp.RocksDb"/> as value.</param>
+        /// <returns>If it successes, returns 0. If it fails, returns -1.</returns>
         public int Set([Argument] InputOutputFormat inputOutputFormat, [Argument] string key, [Argument] string value)
         {
             try
