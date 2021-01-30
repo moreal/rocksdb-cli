@@ -25,16 +25,16 @@ namespace RocksDBTool
         /// <summary>
         /// Gets the value corresponded to <paramref name="key"/> from rocksdb.
         /// </summary>
-        /// <param name="inputOutputFormat">An format of <paramref name="key"/>.
-        /// If <paramref name="inputOutputFormat"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
-        /// should be base64 encoded value. If <paramref name="inputOutputFormat"/> is
-        /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> as string.</param>
         /// <param name="key">A key string following <paramref name="inputOutputFormat"/>.
         /// If <paramref name="inputOutputFormat"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
         /// should be base64 encoded value. If <paramref name="inputOutputFormat"/> is
         /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> as string.</param>
+        /// <param name="inputOutputFormat">An format of <paramref name="key"/>.
+        /// If <paramref name="inputOutputFormat"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
+        /// should be base64 encoded value. If <paramref name="inputOutputFormat"/> is
+        /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> as string.</param>
         /// <returns>If it successes, returns 0. If it fails, returns -1.</returns>
-        public int Get([Argument] InputOutputFormat inputOutputFormat, [Argument] string key)
+        public int Get([Argument] string key, [Option] InputOutputFormat inputOutputFormat = InputOutputFormat.String)
         {
             try
             {
@@ -71,16 +71,16 @@ namespace RocksDBTool
         /// <summary>
         /// Sets the value corresponded to <paramref name="key"/> from rocksdb.
         /// </summary>
-        /// <param name="inputOutputFormat">An format of <paramref name="key"/> and <paramref name="value"/>.
-        /// If <paramref name="inputOutputFormat"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
-        /// and <paramref name="value"/> should be base64 encoded value. If <paramref name="inputOutputFormat"/> is
-        /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> and <paramref name="value"/> as string.</param>
         /// <param name="key">A key string following <paramref name="inputOutputFormat"/>,
         /// to set into <see cref="RocksDbSharp.RocksDb"/> as key.</param>
         /// <param name="value">A value following <paramref name="inputOutputFormat"/>,
         /// to set into <see cref="RocksDbSharp.RocksDb"/> as value.</param>
+        /// <param name="inputOutputFormat">An format of <paramref name="key"/> and <paramref name="value"/>.
+        /// If <paramref name="inputOutputFormat"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
+        /// and <paramref name="value"/> should be base64 encoded value. If <paramref name="inputOutputFormat"/> is
+        /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> and <paramref name="value"/> as string.</param>
         /// <returns>If it successes, returns 0. If it fails, returns -1.</returns>
-        public int Set([Argument] InputOutputFormat inputOutputFormat, [Argument] string key, [Argument] string value)
+        public int Set([Argument] string key, [Argument] string value, [Argument] InputOutputFormat inputOutputFormat = InputOutputFormat.String)
         {
             try
             {

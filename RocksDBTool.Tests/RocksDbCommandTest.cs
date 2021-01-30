@@ -53,7 +53,7 @@ namespace RocksDBTool.Tests
         [InlineData(InputOutputFormat.Base64, "AA==", -1, "")]
         public void Get(InputOutputFormat inputOutputFormat, string key, int expectedReturnCode, string expectedOutput)
         {
-            Assert.Equal(expectedReturnCode, _command.Get(inputOutputFormat, key));  // key: binary
+            Assert.Equal(expectedReturnCode, _command.Get(key, inputOutputFormat));  // key: binary
             Assert.Equal(expectedOutput, _stringInputOutputErrorContainer.Out.ToString());
         }
 
@@ -61,7 +61,7 @@ namespace RocksDBTool.Tests
         [InlineData("foo", "bar", 0)]
         public void SetWithString(string key, string value, int expectedReturnCode)
         {
-            Assert.Equal(expectedReturnCode, _command.Set(InputOutputFormat.String, key, value));
+            Assert.Equal(expectedReturnCode, _command.Set(key, value, InputOutputFormat.String));
             using var db = _rocksDbService.Load();
             Assert.Equal(value, db.Get(key));
         }
@@ -70,7 +70,7 @@ namespace RocksDBTool.Tests
         [InlineData("3q0=", "vu8=", 0)]
         public void SetWithBase64(string key, string value, int expectedReturnCode)
         {
-            Assert.Equal(expectedReturnCode, _command.Set(InputOutputFormat.Base64, key, value));
+            Assert.Equal(expectedReturnCode, _command.Set(key, value, InputOutputFormat.Base64));
             using var db = _rocksDbService.Load();
             Assert.Equal(Convert.FromBase64String(value), db.Get(Convert.FromBase64String(key)));
         }
