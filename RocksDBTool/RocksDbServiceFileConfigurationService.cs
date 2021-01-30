@@ -1,6 +1,8 @@
 namespace RocksDBTool
 {
     using System;
+    using System.IO;
+    using System.Text.Json;
 
     /// <inheritdoc cref="IFileConfigurationService{T}"/>
     /// <seealso cref="RocksDbService"/>
@@ -20,9 +22,18 @@ namespace RocksDBTool
         /// Initializes a new instance of the <see cref="RocksDbServiceFileConfigurationService"/> class.
         /// </summary>
         public RocksDbServiceFileConfigurationService()
-            : this(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile))
+            : this(DefaultPath)
         {
         }
+
+        /// <summary>
+        /// Gets the default path of rocksdb tool configuration file.
+        /// </summary>
+        /// <see cref="RocksDbServiceFileConfigurationService()"/>
+        public static string DefaultPath => System.IO.Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+            ".config",
+            "rocksdb-tool.json");
 
         /// <inheritdoc cref="IFileConfigurationService{T}.Path"/>
         public string Path { get; }
@@ -30,13 +41,13 @@ namespace RocksDBTool
         /// <inheritdoc cref="IFileConfigurationService{T}.Load"/>
         public RocksDbServiceConfiguration Load()
         {
-            throw new System.NotImplementedException();
+            return JsonSerializer.Deserialize<RocksDbServiceConfiguration>(File.ReadAllText(Path));
         }
 
         /// <inheritdoc cref="IFileConfigurationService{T}.Store"/>
         public void Store(RocksDbServiceConfiguration configuration)
         {
-            throw new System.NotImplementedException();
+            File.WriteAllText(Path, JsonSerializer.Serialize(configuration));
         }
     }
 }

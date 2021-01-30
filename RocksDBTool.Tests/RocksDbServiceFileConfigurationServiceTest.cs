@@ -26,11 +26,7 @@ namespace RocksDBTool.Tests
         [Fact]
         public void DefaultPath()
         {
-            var path = System.IO.Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                ".config",
-                "rocksdb-tool.json");
-            Assert.Equal(path, _defaultService.Path);
+            Assert.Equal(RocksDbServiceFileConfigurationService.DefaultPath, _defaultService.Path);
         }
 
         [Fact]
