@@ -1,6 +1,6 @@
 namespace RocksDBTool
 {
-    using Microsoft.Extensions.Configuration;
+    using System;
     using RocksDbSharp;
 
     /// <summary>
@@ -8,37 +8,40 @@ namespace RocksDBTool
     /// </summary>
     public sealed class RocksDbService : IRocksDbService
     {
-        /// <summary>
-        /// The key of <see cref="CurrentRocksDbPath"/> in configuration.
-        /// </summary>
-        public const string CurrentRocksDbPathKey = "current_rocks_db_path";
-
-        private readonly IConfiguration _configuration;
+        private readonly IFileConfigurationService<RocksDbServiceConfiguration> _configurationService;
 
         private readonly DbOptions _options;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RocksDbService"/> class.
         /// </summary>
-        /// <param name="configuration">The configuration having variables to load <see cref="RocksDb"/>.</param>
-        public RocksDbService(IConfiguration configuration)
+        /// <param name="configurationService">A service to load the configuration having variables
+        /// to load <see cref="RocksDb"/>.</param>
+        public RocksDbService(IFileConfigurationService<RocksDbServiceConfiguration> configurationService)
         {
-            _configuration = configuration;
+            _configurationService = configurationService;
             _options = new DbOptions();
         }
 
         /// <inheritdoc cref="IRocksDbService.Load"/>
-        public string CurrentRocksDbPath => _configuration[CurrentRocksDbPathKey];
+        private string? CurrentRocksDbPath => _configurationService.Load().CurrentRocksDbPath;
 
         /// <summary>
         /// Open <see cref="RocksDb"/> from path in configuration.
         /// </summary>
         /// <returns>A <see cref="RocksDb"/> instance.</returns>
-        public RocksDb Load()
+        public RocksDb Load() => Load(CurrentRocksDbPath);
+
+        private RocksDb Load(string? currentRocksDbPath)
         {
+            if (currentRocksDbPath is null)
+            {
+                throw new ArgumentNullException(nameof(currentRocksDbPath));
+            }
+
             return RocksDb.Open(
                 _options,
-                CurrentRocksDbPath);
+                currentRocksDbPath!);
         }
     }
 }

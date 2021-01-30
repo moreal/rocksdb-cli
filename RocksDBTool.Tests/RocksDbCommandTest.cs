@@ -20,12 +20,13 @@ namespace RocksDBTool.Tests
             var temporaryDirectory = Path.Combine(
                 Path.GetTempPath(),
                 Guid.NewGuid().ToString());
-            var configuration = new ConfigurationBuilder()
-                .AddInMemoryCollection(
-                    new Dictionary<string, string>
-                    {
-                        [RocksDbService.CurrentRocksDbPathKey] = temporaryDirectory,
-                    }).Build();
+            var configuration = new RocksDbServiceConfiguration
+            {
+                CurrentRocksDbPath = temporaryDirectory,
+            };
+            var configurationService = new MockRocksDbFileConfigurationService(
+                string.Empty,
+                configuration);
             SetupRocksDb(temporaryDirectory, new Dictionary<string, string>
             {
                 ["string"] = "foo",
@@ -35,7 +36,7 @@ namespace RocksDBTool.Tests
                 [new byte[] { 0xde, 0xad }] = new byte[] { 0xbe, 0xef },
             });
 
-            _rocksDbService = new RocksDbService(configuration);
+            _rocksDbService = new RocksDbService(configurationService);
             _stringInputOutputErrorContainer = new StringInputOutputErrorContainer(
                 new StringReader(string.Empty),
                 new StringWriter(),

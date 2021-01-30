@@ -18,14 +18,14 @@ namespace RocksDBTool.Tests
             _temporaryDirectory = Path.Combine(
                 Path.GetTempPath(),
                 Guid.NewGuid().ToString());
-            var builder = new ConfigurationBuilder();
-            builder.AddInMemoryCollection(
-                new Dictionary<string, string>
-                {
-                    [RocksDbService.CurrentRocksDbPathKey] = _temporaryDirectory,
-                });
-            IConfiguration configuration = builder.Build();
-            _rocksDbService = new RocksDbService(configuration);
+            var configuration = new RocksDbServiceConfiguration
+            {
+                CurrentRocksDbPath = _temporaryDirectory,
+            };
+            var configurationService = new MockRocksDbFileConfigurationService(
+                string.Empty,
+                configuration);
+            _rocksDbService = new RocksDbService(configurationService);
         }
 
         [Fact]
