@@ -25,10 +25,8 @@ namespace RocksDBTool
         /// <summary>
         /// Gets the value corresponded to <paramref name="key"/> from rocksdb.
         /// </summary>
-        /// <param name="key">A key string following <paramref name="format"/>.
-        /// If <paramref name="format"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
-        /// should be base64 encoded value. If <paramref name="format"/> is
-        /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> as string.</param>
+        /// <param name="key">A key string following <paramref name="format"/>,
+        /// to get from <see cref="RocksDbSharp.RocksDb"/> as a key.</param>
         /// <param name="format">An format of <paramref name="key"/>.
         /// If <paramref name="format"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
         /// should be base64 encoded value. If <paramref name="format"/> is
@@ -72,9 +70,9 @@ namespace RocksDBTool
         /// Sets the value corresponded to <paramref name="key"/> from rocksdb.
         /// </summary>
         /// <param name="key">A key string following <paramref name="format"/>,
-        /// to set into <see cref="RocksDbSharp.RocksDb"/> as key.</param>
+        /// to set into <see cref="RocksDbSharp.RocksDb"/> as a key.</param>
         /// <param name="value">A value following <paramref name="format"/>,
-        /// to set into <see cref="RocksDbSharp.RocksDb"/> as value.</param>
+        /// to set into <see cref="RocksDbSharp.RocksDb"/> as a value.</param>
         /// <param name="format">An format of <paramref name="key"/> and <paramref name="value"/>.
         /// If <paramref name="format"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
         /// and <paramref name="value"/> should be base64 encoded value. If <paramref name="format"/> is
