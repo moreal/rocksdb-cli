@@ -78,7 +78,7 @@ namespace RocksDBTool
         /// and <paramref name="value"/> should be base64 encoded value. If <paramref name="format"/> is
         /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> and <paramref name="value"/> as string.</param>
         /// <returns>If it successes, returns 0. If it fails, returns -1.</returns>
-        public int Set([Argument] string key, [Argument] string value, [Argument] InputOutputFormat format = InputOutputFormat.String)
+        public int Set([Argument] string key, [Argument] string value, [Option] InputOutputFormat format = InputOutputFormat.String)
         {
             try
             {
