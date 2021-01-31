@@ -107,5 +107,22 @@ namespace RocksDBTool
 
             return -1;
         }
+
+        /// <summary>
+        /// Prints keys and values from <see cref="RocksDbSharp.RocksDb"/> located at <paramref name="rocksdbPath"/>.
+        /// </summary>
+        /// <param name="prefix">The prefix of keys to filter.</param>
+        /// <param name="format">An format of <paramref name="prefix"/>, keys and values.
+        /// For instance, if <paramref name="format"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="prefix"/>
+        /// should be base64 encoded value. If <paramref name="format"/> is <see cref="InputOutputFormat.String"/>,
+        /// it treats <paramref name="prefix"/> as string.</param>
+        /// <param name="rocksdbPath">The path of <see cref="RocksDbSharp.RocksDb"/> to load.</param>
+        public void List(
+            [Option] string prefix = "",
+            [Option] InputOutputFormat format = InputOutputFormat.String,
+            [Option] string? rocksdbPath = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

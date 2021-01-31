@@ -39,6 +39,8 @@ namespace RocksDBTool.Tests
             _command = new RocksDbCommand(
                 _stringInputOutputErrorContainer,
                 _rocksDbService);
+
+            _stringInputOutputErrorContainer.SetNewLines();
         }
 
         [Theory]
@@ -68,6 +70,30 @@ namespace RocksDBTool.Tests
             Assert.Equal(expectedReturnCode, _command.Set(key, value, InputOutputFormat.Base64, _temporaryDirectory));
             using var db = _rocksDbService.Load(_temporaryDirectory);
             Assert.Equal(Convert.FromBase64String(value), db.Get(Convert.FromBase64String(key)));
+        }
+
+        [Theory]
+        [InlineData(InputOutputFormat.Base64, "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
+        [InlineData(InputOutputFormat.String, "string\tfoo\n" + "\xde\xad\t\xbe\xef")]
+        public void List(InputOutputFormat format, string expectedOutput)
+        {
+            _command.List(format: format, rocksdbPath: _temporaryDirectory);
+            Assert.Equal(expectedOutput, _stringInputOutputErrorContainer.Out.ToString());
+            Assert.Equal("Key\tValue\n", _stringInputOutputErrorContainer.Error.ToString());
+        }
+
+        [Theory]
+        [InlineData(InputOutputFormat.Base64, "3g==", "3q0=\tvu8=\n")]
+        [InlineData(InputOutputFormat.Base64, "3q0=", "3q0=\tvu8=\n")]
+        [InlineData(InputOutputFormat.Base64, "dW5rbm93bi1wcmVmaXg=", "")]
+        [InlineData(InputOutputFormat.String, "s", "string\tfoo\n")]
+        [InlineData(InputOutputFormat.String, "str", "string\tfoo\n")]
+        [InlineData(InputOutputFormat.String, "unknown-prefix", "")]
+        public void ListWithPrefix(InputOutputFormat format, string prefix, string expectedOutput)
+        {
+            _command.List(prefix: prefix, format: format, rocksdbPath: _temporaryDirectory);
+            Assert.Equal(expectedOutput, _stringInputOutputErrorContainer.Out.ToString());
+            Assert.Equal("Key\tValue\n", _stringInputOutputErrorContainer.Error.ToString());
         }
 
         private void SetupRocksDb(string path, IEnumerable<KeyValuePair<string, string>> pairs)
