@@ -8,40 +8,24 @@ namespace RocksDBTool
     /// </summary>
     public sealed class RocksDbService : IRocksDbService
     {
-        private readonly IFileConfigurationService<RocksDbServiceConfiguration> _configurationService;
-
         private readonly DbOptions _options;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RocksDbService"/> class.
         /// </summary>
-        /// <param name="configurationService">A service to load the configuration having variables
-        /// to load <see cref="RocksDb"/>.</param>
-        public RocksDbService(IFileConfigurationService<RocksDbServiceConfiguration> configurationService)
+        public RocksDbService()
         {
-            _configurationService = configurationService;
             _options = new DbOptions();
         }
-
-        /// <inheritdoc cref="IRocksDbService.Load"/>
-        private string? CurrentRocksDbPath => _configurationService.Load().CurrentRocksDbPath;
 
         /// <summary>
         /// Open <see cref="RocksDb"/> from path in configuration.
         /// </summary>
+        /// <param name="path">The path of <see cref="RocksDb"/> to load.</param>
         /// <returns>A <see cref="RocksDb"/> instance.</returns>
-        public RocksDb Load() => Load(CurrentRocksDbPath);
-
-        private RocksDb Load(string? currentRocksDbPath)
+        public RocksDb Load(string path)
         {
-            if (currentRocksDbPath is null)
-            {
-                throw new ArgumentNullException(nameof(currentRocksDbPath));
-            }
-
-            return RocksDb.Open(
-                _options,
-                currentRocksDbPath!);
+            return RocksDb.Open(_options, path);
         }
     }
 }

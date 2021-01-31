@@ -1,6 +1,7 @@
 namespace RocksDBTool
 {
     using System;
+    using System.IO;
     using Cocona;
 
     /// <summary>
@@ -31,12 +32,14 @@ namespace RocksDBTool
         /// If <paramref name="format"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
         /// should be base64 encoded value. If <paramref name="format"/> is
         /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> as string.</param>
+        /// <param name="rocksdbPath">The path of <see cref="RocksDbSharp.RocksDb"/> to load.</param>
         /// <returns>If it successes, returns 0. If it fails, returns -1.</returns>
-        public int Get([Argument] string key, [Option] InputOutputFormat format = InputOutputFormat.String)
+        public int Get([Argument] string key, [Option] InputOutputFormat format = InputOutputFormat.String, [Option] string? rocksdbPath = null)
         {
+            rocksdbPath ??= Directory.GetCurrentDirectory();
             try
             {
-                using var db = _rocksDbService.Load();
+                using var db = _rocksDbService.Load(rocksdbPath);
                 switch (format)
                 {
                     case InputOutputFormat.Base64:
@@ -77,12 +80,14 @@ namespace RocksDBTool
         /// If <paramref name="format"/> is <see cref="InputOutputFormat.Base64"/>, <paramref name="key"/>
         /// and <paramref name="value"/> should be base64 encoded value. If <paramref name="format"/> is
         /// <see cref="InputOutputFormat.String"/>, it treats <paramref name="key"/> and <paramref name="value"/> as string.</param>
+        /// <param name="rocksdbPath">The path of <see cref="RocksDbSharp.RocksDb"/> to load.</param>
         /// <returns>If it successes, returns 0. If it fails, returns -1.</returns>
-        public int Set([Argument] string key, [Argument] string value, [Option] InputOutputFormat format = InputOutputFormat.String)
+        public int Set([Argument] string key, [Argument] string value, [Option] InputOutputFormat format = InputOutputFormat.String, [Option] string? rocksdbPath = null)
         {
+            rocksdbPath ??= Directory.GetCurrentDirectory();
             try
             {
-                using var db = _rocksDbService.Load();
+                using var db = _rocksDbService.Load(rocksdbPath);
                 switch (format)
                 {
                     case InputOutputFormat.Base64:

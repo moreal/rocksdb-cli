@@ -15,28 +15,23 @@ namespace RocksDBTool.Tests
 
         private readonly StringInputOutputErrorContainer _stringInputOutputErrorContainer;
 
+        private readonly string _temporaryDirectory;
+
         public RocksDbCommandTest()
         {
-            var temporaryDirectory = Path.Combine(
+            _temporaryDirectory = Path.Combine(
                 Path.GetTempPath(),
                 Guid.NewGuid().ToString());
-            var configuration = new RocksDbServiceConfiguration
-            {
-                CurrentRocksDbPath = temporaryDirectory,
-            };
-            var configurationService = new MockRocksDbFileConfigurationService(
-                string.Empty,
-                configuration);
-            SetupRocksDb(temporaryDirectory, new Dictionary<string, string>
+            SetupRocksDb(_temporaryDirectory, new Dictionary<string, string>
             {
                 ["string"] = "foo",
             });
-            SetupRocksDb(temporaryDirectory, new Dictionary<byte[], byte[]>
+            SetupRocksDb(_temporaryDirectory, new Dictionary<byte[], byte[]>
             {
                 [new byte[] { 0xde, 0xad }] = new byte[] { 0xbe, 0xef },
             });
 
-            _rocksDbService = new RocksDbService(configurationService);
+            _rocksDbService = new RocksDbService();
             _stringInputOutputErrorContainer = new StringInputOutputErrorContainer(
                 new StringReader(string.Empty),
                 new StringWriter(),
@@ -53,7 +48,7 @@ namespace RocksDBTool.Tests
         [InlineData(InputOutputFormat.Base64, "AA==", -1, "")]
         public void Get(InputOutputFormat inputOutputFormat, string key, int expectedReturnCode, string expectedOutput)
         {
-            Assert.Equal(expectedReturnCode, _command.Get(key, inputOutputFormat));  // key: binary
+            Assert.Equal(expectedReturnCode, _command.Get(key, inputOutputFormat, _temporaryDirectory));  // key: binary
             Assert.Equal(expectedOutput, _stringInputOutputErrorContainer.Out.ToString());
         }
 
@@ -61,8 +56,8 @@ namespace RocksDBTool.Tests
         [InlineData("foo", "bar", 0)]
         public void SetWithString(string key, string value, int expectedReturnCode)
         {
-            Assert.Equal(expectedReturnCode, _command.Set(key, value, InputOutputFormat.String));
-            using var db = _rocksDbService.Load();
+            Assert.Equal(expectedReturnCode, _command.Set(key, value, InputOutputFormat.String, _temporaryDirectory));
+            using var db = _rocksDbService.Load(_temporaryDirectory);
             Assert.Equal(value, db.Get(key));
         }
 
@@ -70,8 +65,8 @@ namespace RocksDBTool.Tests
         [InlineData("3q0=", "vu8=", 0)]
         public void SetWithBase64(string key, string value, int expectedReturnCode)
         {
-            Assert.Equal(expectedReturnCode, _command.Set(key, value, InputOutputFormat.Base64));
-            using var db = _rocksDbService.Load();
+            Assert.Equal(expectedReturnCode, _command.Set(key, value, InputOutputFormat.Base64, _temporaryDirectory));
+            using var db = _rocksDbService.Load(_temporaryDirectory);
             Assert.Equal(Convert.FromBase64String(value), db.Get(Convert.FromBase64String(key)));
         }
 

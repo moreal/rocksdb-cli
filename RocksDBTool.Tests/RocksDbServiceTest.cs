@@ -18,14 +18,7 @@ namespace RocksDBTool.Tests
             _temporaryDirectory = Path.Combine(
                 Path.GetTempPath(),
                 Guid.NewGuid().ToString());
-            var configuration = new RocksDbServiceConfiguration
-            {
-                CurrentRocksDbPath = _temporaryDirectory,
-            };
-            var configurationService = new MockRocksDbFileConfigurationService(
-                string.Empty,
-                configuration);
-            _rocksDbService = new RocksDbService(configurationService);
+            _rocksDbService = new RocksDbService();
         }
 
         [Fact]
@@ -42,7 +35,7 @@ namespace RocksDBTool.Tests
                 db.Put("guid", guid.ToString());
             }
 
-            using (var db = _rocksDbService.Load())
+            using (var db = _rocksDbService.Load(_temporaryDirectory))
             {
                 Assert.Equal("bar", db.Get("foo"));
                 Assert.Equal(guid.ToString(), db.Get("guid"));
@@ -52,7 +45,7 @@ namespace RocksDBTool.Tests
         [Fact]
         public void LoadThrowsExceptionIfMissing()
         {
-            Assert.Throws<RocksDbException>(() => _rocksDbService.Load());
+            Assert.Throws<RocksDbException>(() => _rocksDbService.Load(_temporaryDirectory));
         }
 
         public void Dispose()
