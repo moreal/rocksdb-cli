@@ -74,7 +74,7 @@ namespace RocksDBTool.Tests
 
         [Theory]
         [InlineData(InputOutputFormat.Base64, "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
-        [InlineData(InputOutputFormat.String, "string\tfoo\n" + "\xde\xad\t\xbe\xef")]
+        [InlineData(InputOutputFormat.String, "string\tfoo\n" + "\xde\xad\t\xbe\xef\n")]
         public void List(InputOutputFormat format, string expectedOutput)
         {
             _command.List(format: format, rocksdbPath: _temporaryDirectory);
