@@ -2,6 +2,8 @@ namespace RocksDBTool
 {
     using System;
     using System.IO;
+    using System.Linq;
+    using System.Text;
     using Cocona;
 
     /// <summary>
@@ -122,7 +124,42 @@ namespace RocksDBTool
             [Option] InputOutputFormat format = InputOutputFormat.String,
             [Option] string? rocksdbPath = null)
         {
-            throw new NotImplementedException();
+            rocksdbPath ??= Directory.GetCurrentDirectory();
+            try
+            {
+                using var db = _rocksDbService.Load(rocksdbPath);
+                byte[] prefixBytes = format switch
+                {
+                    InputOutputFormat.Base64 => Convert.FromBase64String(prefix),
+                    InputOutputFormat.String => Encoding.UTF8.GetBytes(prefix),
+                    _ => throw new ArgumentException(nameof(format)),
+                };
+
+                _inputOutputErrorContainer.Error.WriteLine("Key\tValue");
+                using var iterator = db.NewIterator();
+                for (iterator.Seek(prefixBytes);
+                    iterator.Valid() && iterator.Key().Take(prefixBytes.Length).SequenceEqual(prefixBytes);
+                    iterator.Next())
+                {
+                    switch (format)
+                    {
+                        case InputOutputFormat.Base64:
+                            _inputOutputErrorContainer.Out.Write(Convert.ToBase64String(iterator.Key()));
+                            _inputOutputErrorContainer.Out.Write('\t');
+                            _inputOutputErrorContainer.Out.WriteLine(Convert.ToBase64String(iterator.Value()));
+                            break;
+                        case InputOutputFormat.String:
+                            _inputOutputErrorContainer.Out.Write(iterator.StringKey());
+                            _inputOutputErrorContainer.Out.Write('\t');
+                            _inputOutputErrorContainer.Out.WriteLine(iterator.StringValue());
+                            break;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _inputOutputErrorContainer.Error.WriteLine(e.Message);
+            }
         }
     }
 }
