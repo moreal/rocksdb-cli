@@ -1,10 +1,13 @@
 namespace RocksDBTool
 {
     using System;
+    using System.Buffers.Text;
     using System.IO;
     using System.Linq;
     using System.Text;
     using Cocona;
+    using RocksDBTool.Formats;
+    using RocksDBTool.Services;
 
     /// <summary>
     /// A class to handle <see cref="RocksDbSharp.RocksDb"/> in command line.
@@ -31,9 +34,9 @@ namespace RocksDBTool
         /// <param name="key">A key string following <paramref name="inputFormat"/>,
         /// to get from <see cref="RocksDbSharp.RocksDb"/> as a key.</param>
         /// <param name="inputFormat">An format of <paramref name="key"/>.
-        /// If <paramref name="inputFormat"/> is <see cref="InputFormat.Base64"/>, <paramref name="key"/>
+        /// If <paramref name="inputFormat"/> is <see cref="Base64"/>, <paramref name="key"/>
         /// should be base64 encoded value. If <paramref name="inputFormat"/> is
-        /// <see cref="InputFormat.String"/>, it treats <paramref name="key"/> as <see cref="Encoding.UTF8"/> encoded
+        /// <see cref="string"/>, it treats <paramref name="key"/> as <see cref="Encoding.UTF8"/> encoded
         /// string.</param>
         /// <param name="outputFormat">A format of output.</param>
         /// <param name="rocksdbPath">The path of <see cref="RocksDbSharp.RocksDb"/> to load.</param>

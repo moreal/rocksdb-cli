@@ -1,5 +1,7 @@
-namespace RocksDBTool.Tests
+namespace RocksDBTool.Tests.Services
 {
+    using RocksDBTool.Services;
+
     public class MockRocksDbFileConfigurationService : IFileConfigurationService<RocksDbServiceConfiguration>
     {
         private readonly string _path;

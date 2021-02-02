@@ -1,7 +1,8 @@
-namespace RocksDBTool.Tests
+namespace RocksDBTool.Tests.Services
 {
     using System;
     using System.IO;
+    using RocksDBTool.Services;
     using Xunit;
 
     public class RocksDbServiceFileConfigurationServiceTest

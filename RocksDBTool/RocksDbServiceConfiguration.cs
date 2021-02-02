@@ -4,7 +4,7 @@ namespace RocksDBTool
     using System.Text.Json.Serialization;
 
     /// <summary>
-    /// A class to represent configuration of <see cref="RocksDbService"/>.
+    /// A class to represent configuration of <see cref="Services.RocksDbService"/>.
     /// </summary>
     public sealed class RocksDbServiceConfiguration : IEquatable<RocksDbServiceConfiguration>
     {

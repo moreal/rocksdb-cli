@@ -1,4 +1,4 @@
-namespace RocksDBTool
+namespace RocksDBTool.Formats
 {
     using System;
 

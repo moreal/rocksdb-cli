@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using Cocona;
     using Microsoft.Extensions.DependencyInjection;
+    using RocksDBTool.Services;
 
     /// <summary>
     /// The main class to run as entrypoint.

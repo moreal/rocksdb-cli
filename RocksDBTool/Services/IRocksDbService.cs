@@ -1,4 +1,4 @@
-namespace RocksDBTool
+namespace RocksDBTool.Services
 {
     using RocksDbSharp;
 

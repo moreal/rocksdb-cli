@@ -5,6 +5,8 @@ namespace RocksDBTool.Tests
     using System.IO;
     using Microsoft.Extensions.Configuration;
     using RocksDbSharp;
+    using RocksDBTool.Formats;
+    using RocksDBTool.Services;
     using Xunit;
 
     public sealed class RocksDbCommandTest
