@@ -1,9 +1,7 @@
 namespace RocksDBTool.Tests.Services
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
-    using Microsoft.Extensions.Configuration;
     using RocksDbSharp;
     using RocksDBTool.Services;
     using Xunit;

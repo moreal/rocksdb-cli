@@ -3,7 +3,6 @@ namespace RocksDBTool.Tests
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using Microsoft.Extensions.Configuration;
     using RocksDbSharp;
     using RocksDBTool.Formats;
     using RocksDBTool.Services;

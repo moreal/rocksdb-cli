@@ -1,6 +1,5 @@
 namespace RocksDBTool.Services
 {
-    using System;
     using RocksDbSharp;
 
     /// <summary>
