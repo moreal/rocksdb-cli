@@ -77,11 +77,11 @@ namespace RocksDBTool.Tests
         }
 
         [Theory]
-        [InlineData(InputFormat.Base64, OutputFormat.Hex, "737472696e67\t666f6f\n" + "dead\tbeaf\n")]
+        [InlineData(InputFormat.Base64, OutputFormat.Hex, "737472696e67\t666f6f\n" + "dead\tbeef\n")]
         [InlineData(InputFormat.Base64, OutputFormat.Base64, "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
-        [InlineData(InputFormat.String, OutputFormat.Hex, "737472696e67\t666f6f\n" + "dead\tbeaf\n")]
+        [InlineData(InputFormat.String, OutputFormat.Hex, "737472696e67\t666f6f\n" + "dead\tbeef\n")]
         [InlineData(InputFormat.String, OutputFormat.Base64, "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
-        [InlineData(InputFormat.Hex, OutputFormat.Hex, "737472696e67\t666f6f\n" + "dead\tbeaf\n")]
+        [InlineData(InputFormat.Hex, OutputFormat.Hex, "737472696e67\t666f6f\n" + "dead\tbeef\n")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
         public void List(InputFormat inputFormat, OutputFormat outputFormat, string expectedOutput)
         {
@@ -91,9 +91,9 @@ namespace RocksDBTool.Tests
         }
 
         [Theory]
-        [InlineData(InputFormat.Base64, OutputFormat.Hex, "3g==", "dead\tbeaf\n")]
+        [InlineData(InputFormat.Base64, OutputFormat.Hex, "3g==", "dead\tbeef\n")]
         [InlineData(InputFormat.Base64, OutputFormat.Base64, "3g==", "3q0=\tvu8=\n")]
-        [InlineData(InputFormat.Base64, OutputFormat.Hex, "3q0=", "dead\tbeaf\n")]
+        [InlineData(InputFormat.Base64, OutputFormat.Hex, "3q0=", "dead\tbeef\n")]
         [InlineData(InputFormat.Base64, OutputFormat.Base64, "3q0=", "3q0=\tvu8=\n")]
         [InlineData(InputFormat.Base64, OutputFormat.Hex, "dW5rbm93bi1wcmVmaXg=", "")]
         [InlineData(InputFormat.Base64, OutputFormat.Base64, "dW5rbm93bi1wcmVmaXg=", "")]
@@ -111,15 +111,15 @@ namespace RocksDBTool.Tests
         [InlineData(InputFormat.Hex, OutputFormat.Hex, "756E6B6E6F776E2D707265666978", "")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "756e6b6e6f776e2d707265666978", "")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "756E6B6E6F776E2D707265666978", "")]
-        [InlineData(InputFormat.Hex, OutputFormat.Hex, "de", "dead\tbeaf\n")]
-        [InlineData(InputFormat.Hex, OutputFormat.Hex, "De", "dead\tbeaf\n")]
-        [InlineData(InputFormat.Hex, OutputFormat.Hex, "DE", "dead\tbeaf\n")]
+        [InlineData(InputFormat.Hex, OutputFormat.Hex, "de", "dead\tbeef\n")]
+        [InlineData(InputFormat.Hex, OutputFormat.Hex, "De", "dead\tbeef\n")]
+        [InlineData(InputFormat.Hex, OutputFormat.Hex, "DE", "dead\tbeef\n")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "de", "3q0=\tvu8=\n")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "De", "3q0=\tvu8=\n")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "DE", "3q0=\tvu8=\n")]
-        [InlineData(InputFormat.Hex, OutputFormat.Hex, "dead", "dead\tbeaf\n")]
-        [InlineData(InputFormat.Hex, OutputFormat.Hex, "deAd", "dead\tbeaf\n")]
-        [InlineData(InputFormat.Hex, OutputFormat.Hex, "DEAD", "dead\tbeaf\n")]
+        [InlineData(InputFormat.Hex, OutputFormat.Hex, "dead", "dead\tbeef\n")]
+        [InlineData(InputFormat.Hex, OutputFormat.Hex, "deAd", "dead\tbeef\n")]
+        [InlineData(InputFormat.Hex, OutputFormat.Hex, "DEAD", "dead\tbeef\n")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "dead", "3q0=\tvu8=\n")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "dEad", "3q0=\tvu8=\n")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "DEAD", "3q0=\tvu8=\n")]
