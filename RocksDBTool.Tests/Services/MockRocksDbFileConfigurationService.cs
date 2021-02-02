@@ -1,6 +1,6 @@
-namespace RocksDBTool.Tests.Services
+namespace RocksDbTool.Tests.Services
 {
-    using RocksDBTool.Services;
+    using RocksDbTool.Services;
 
     public class MockRocksDbFileConfigurationService : IFileConfigurationService<RocksDbServiceConfiguration>
     {

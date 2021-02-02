@@ -1,4 +1,4 @@
-namespace RocksDBTool
+namespace RocksDbTool
 {
     using System;
     using System.Buffers.Text;
@@ -6,8 +6,8 @@ namespace RocksDBTool
     using System.Linq;
     using System.Text;
     using Cocona;
-    using RocksDBTool.Formats;
-    using RocksDBTool.Services;
+    using RocksDbTool.Formats;
+    using RocksDbTool.Services;
 
     /// <summary>
     /// A class to handle <see cref="RocksDbSharp.RocksDb"/> in command line.

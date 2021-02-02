@@ -1,9 +1,9 @@
-﻿namespace RocksDBTool
+﻿namespace RocksDbTool
 {
     using System.Threading.Tasks;
     using Cocona;
     using Microsoft.Extensions.DependencyInjection;
-    using RocksDBTool.Services;
+    using RocksDbTool.Services;
 
     /// <summary>
     /// The main class to run as entrypoint.

@@ -1,4 +1,4 @@
-namespace RocksDBTool.Tests
+namespace RocksDbTool.Tests
 {
     using System.IO;
 

@@ -1,4 +1,4 @@
-namespace RocksDBTool.Services
+namespace RocksDbTool.Services
 {
     /// <summary>
     /// A class which load and store configuration on a file.

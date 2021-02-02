@@ -1,11 +1,11 @@
-namespace RocksDBTool.Tests
+namespace RocksDbTool.Tests
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using RocksDbSharp;
-    using RocksDBTool.Formats;
-    using RocksDBTool.Services;
+    using RocksDbTool.Formats;
+    using RocksDbTool.Services;
     using Xunit;
 
     public sealed class RocksDbCommandTest

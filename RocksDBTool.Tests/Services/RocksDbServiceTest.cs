@@ -1,9 +1,9 @@
-namespace RocksDBTool.Tests.Services
+namespace RocksDbTool.Tests.Services
 {
     using System;
     using System.IO;
     using RocksDbSharp;
-    using RocksDBTool.Services;
+    using RocksDbTool.Services;
     using Xunit;
 
     public sealed class RocksDbServiceTest : IDisposable

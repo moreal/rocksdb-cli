@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksDBTool", "RocksDBTool\RocksDBTool.csproj", "{5507E7D0-933F-461C-BC06-7988D08DE2CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksDbTool", "RocksDbTool\RocksDbTool.csproj", "{5507E7D0-933F-461C-BC06-7988D08DE2CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksDBTool.Tests", "RocksDBTool.Tests\RocksDBTool.Tests.csproj", "{1CFC99E2-8A84-41E9-B5BA-440E906DBA4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocksDbTool.Tests", "RocksDbTool.Tests\RocksDbTool.Tests.csproj", "{1CFC99E2-8A84-41E9-B5BA-440E906DBA4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

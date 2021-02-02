@@ -1,4 +1,4 @@
-namespace RocksDBTool.Services
+namespace RocksDbTool.Services
 {
     using System;
     using System.IO;

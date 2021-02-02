@@ -1,4 +1,4 @@
-namespace RocksDBTool
+namespace RocksDbTool
 {
     using System;
     using System.Text.Json.Serialization;

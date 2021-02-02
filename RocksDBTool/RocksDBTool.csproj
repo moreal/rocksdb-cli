@@ -6,8 +6,9 @@
     <LangVersion>9</LangVersion>
     <Nullable>enable</Nullable>
     <ToolCommandName>rocksdb</ToolCommandName>
+    <RootNamespace>RocksDbTool</RootNamespace>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>..\RocksDBTool.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\RocksDbTool.ruleset</CodeAnalysisRuleSet>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
