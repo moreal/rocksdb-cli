@@ -50,6 +50,7 @@ namespace RocksDBTool
                 {
                     string value = ConvertWithOutputFormat(outputFormat, valueBytes);
                     _inputOutputErrorContainer.Out.Write(value);
+                    return 0;
                 }
             }
             catch (Exception e)
