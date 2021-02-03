@@ -78,20 +78,12 @@ namespace RocksDbTool.Tests
         }
 
         [Theory]
-        [InlineData(InputFormat.Base64, OutputFormat.Hex, "737472696e67\t666f6f\n" + "dead\tbeef\n")]
-        [InlineData(InputFormat.Base64, OutputFormat.Base64, "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
-        [InlineData(InputFormat.String, OutputFormat.Hex, "737472696e67\t666f6f\n" + "dead\tbeef\n")]
-        [InlineData(InputFormat.String, OutputFormat.Base64, "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
-        [InlineData(InputFormat.Hex, OutputFormat.Hex, "737472696e67\t666f6f\n" + "dead\tbeef\n")]
-        [InlineData(InputFormat.Hex, OutputFormat.Base64, "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
-        public void List(InputFormat inputFormat, OutputFormat outputFormat, string expectedOutput)
-        {
-            _command.List(inputFormat: inputFormat, outputFormat: outputFormat, rocksdbPath: _temporaryDirectory);
-            Assert.Equal(expectedOutput, _stringInputOutputErrorContainer.Out.ToString());
-            Assert.Equal("Key\tValue\n", _stringInputOutputErrorContainer.Error.ToString());
-        }
-
-        [Theory]
+        [InlineData(InputFormat.Base64, OutputFormat.Hex, "", "737472696e67\t666f6f\n" + "dead\tbeef\n")]
+        [InlineData(InputFormat.Base64, OutputFormat.Base64, "", "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
+        [InlineData(InputFormat.String, OutputFormat.Hex, "", "737472696e67\t666f6f\n" + "dead\tbeef\n")]
+        [InlineData(InputFormat.String, OutputFormat.Base64, "", "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
+        [InlineData(InputFormat.Hex, OutputFormat.Hex, "", "737472696e67\t666f6f\n" + "dead\tbeef\n")]
+        [InlineData(InputFormat.Hex, OutputFormat.Base64, "", "c3RyaW5n\tZm9v\n" + "3q0=\tvu8=\n")]
         [InlineData(InputFormat.Base64, OutputFormat.Hex, "3g==", "dead\tbeef\n")]
         [InlineData(InputFormat.Base64, OutputFormat.Base64, "3g==", "3q0=\tvu8=\n")]
         [InlineData(InputFormat.Base64, OutputFormat.Hex, "3q0=", "dead\tbeef\n")]
@@ -124,9 +116,9 @@ namespace RocksDbTool.Tests
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "dead", "3q0=\tvu8=\n")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "dEad", "3q0=\tvu8=\n")]
         [InlineData(InputFormat.Hex, OutputFormat.Base64, "DEAD", "3q0=\tvu8=\n")]
-        public void ListWithPrefix(InputFormat inputFormat, OutputFormat outputFormat, string prefix, string expectedOutput)
+        public void List(InputFormat inputFormat, OutputFormat outputFormat, string prefix, string expectedOutput)
         {
-            _command.List(prefix: prefix, inputFormat: inputFormat, outputFormat: outputFormat, rocksdbPath: _temporaryDirectory);
+            _command.List(inputFormat: inputFormat, outputFormat: outputFormat, prefix: prefix, rocksdbPath: _temporaryDirectory);
             Assert.Equal(expectedOutput, _stringInputOutputErrorContainer.Out.ToString());
             Assert.Equal("Key\tValue\n", _stringInputOutputErrorContainer.Error.ToString());
         }
