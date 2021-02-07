@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using Cocona;
     using Microsoft.Extensions.DependencyInjection;
+    using RocksDbTool.Commands;
     using RocksDbTool.Services;
 
     /// <summary>

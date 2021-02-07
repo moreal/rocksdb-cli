@@ -1,4 +1,4 @@
-namespace RocksDbTool
+namespace RocksDbTool.Commands
 {
     using System;
     using System.Buffers.Text;
