@@ -151,7 +151,17 @@ namespace RocksDbTool
             [Option] InputFormat inputFormat = InputFormat.String,
             [Option] string? rocksdbPath = null)
         {
-            throw new NotImplementedException();
+            rocksdbPath ??= Directory.GetCurrentDirectory();
+            try
+            {
+                using var db = _rocksDbService.Load(rocksdbPath);
+                byte[] keyBytes = inputFormat.Decode(key);
+                db.Remove(keyBytes);
+            }
+            catch (Exception e)
+            {
+                _inputOutputErrorContainer.Error.WriteLine(e.Message);
+            }
         }
     }
 }
