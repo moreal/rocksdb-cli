@@ -123,6 +123,27 @@ namespace RocksDbTool.Tests
             Assert.Equal("Key\tValue\n", _stringInputOutputErrorContainer.Error.ToString());
         }
 
+        [Theory]
+        [InlineData(InputFormat.Base64, "bG9uZy1ieXRlcw==")] // "long-bytes"
+        [InlineData(InputFormat.Hex, "6c6f6e672d6279746573")] // "long-bytes"
+        [InlineData(InputFormat.String, "long-bytes")] // "long-bytes"
+        [InlineData(InputFormat.Base64, "c3RyaW5n")] // "string"
+        [InlineData(InputFormat.Hex, "737472696e67")] // "string"
+        [InlineData(InputFormat.String, "string")] // "string"
+        [InlineData(InputFormat.Base64, "3q0=")] // b"\xde\xad"
+        [InlineData(InputFormat.Hex, "dead")] // b"\xde\xad"
+        [InlineData(InputFormat.Base64, "")] // empty
+        [InlineData(InputFormat.Hex, "")] // empty
+        [InlineData(InputFormat.String, "")] // empty
+        public void Remove(InputFormat inputFormat, string key)
+        {
+            _command.Remove(
+                key: key,
+                inputFormat: inputFormat);
+            using var db = OpenRocksDb(_temporaryDirectory);
+            Assert.Null(db.Get(inputFormat.Decode(key)));
+        }
+
         private void SetupRocksDb(string path, IEnumerable<KeyValuePair<string, string>> pairs)
         {
             using var db = OpenRocksDb(path);

@@ -134,5 +134,24 @@ namespace RocksDbTool
                 _inputOutputErrorContainer.Error.WriteLine(e.Message);
             }
         }
+
+        /// <summary>
+        /// Removes <paramref name="key"/> from <see cref="RocksDbSharp.RocksDb"/>
+        /// located at <paramref name="rocksdbPath"/>.
+        /// </summary>
+        /// <param name="key">The key of the value to remove.</param>
+        /// <param name="inputFormat">An format of <paramref name="key"/>.
+        /// For instance, if <paramref name="inputFormat"/> is <see cref="InputFormat.Base64"/>, <paramref name="key"/>
+        /// should be base64 encoded value. If <paramref name="inputFormat"/> is <see cref="InputFormat.String"/>,
+        /// it treats <paramref name="key"/> as <see cref="Encoding.UTF8"/> encoded string.  If
+        /// <paramref name="inputFormat"/> is <see cref="InputFormat.Hex"/>, it treats as hexadecimal-string.</param>
+        /// <param name="rocksdbPath">The path of <see cref="RocksDbSharp.RocksDb"/> to load.</param>
+        public void Remove(
+            [Argument] string key,
+            [Option] InputFormat inputFormat = InputFormat.String,
+            [Option] string? rocksdbPath = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
