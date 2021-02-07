@@ -12,6 +12,7 @@ namespace RocksDbTool.Commands
     /// <summary>
     /// A class to handle <see cref="RocksDbSharp.RocksDb"/> in command line.
     /// </summary>
+    [HasSubCommands(typeof(RocksDbColumnFamiliesCommand), "column-families")]
     public sealed class RocksDbCommand
     {
         private readonly IInputOutputErrorContainer _inputOutputErrorContainer;
