@@ -17,5 +17,5 @@ $ dotnet tool install RocksDbTool
 You can see the help message by:
 
 ```
-$ rocksdb --help
+$ dotnet rocksdb --help
 ```
