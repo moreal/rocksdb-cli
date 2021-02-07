@@ -1,7 +1,8 @@
 namespace RocksDbTool.Commands
 {
-    using System;
+    using System.IO;
     using Cocona;
+    using RocksDbSharp;
     using RocksDbTool.Services;
 
     /// <summary>
@@ -31,7 +32,12 @@ namespace RocksDbTool.Commands
         /// <param name="rocksdbPath">The path of <see cref="RocksDbSharp.RocksDb"/> to load.</param>
         public void Create([Argument] string name, [Option] string? rocksdbPath = null)
         {
-            throw new NotImplementedException();
+            rocksdbPath ??= Directory.GetCurrentDirectory();
+            using var db = _rocksDbService.Load(rocksdbPath);
+            var options = new ColumnFamilyOptions();
+            db.CreateColumnFamily(
+                options,
+                name);
         }
 
         /// <summary>
@@ -41,7 +47,9 @@ namespace RocksDbTool.Commands
         /// <param name="rocksdbPath">The path of <see cref="RocksDbSharp.RocksDb"/> to load.</param>
         public void Remove([Argument] string name, [Option] string? rocksdbPath = null)
         {
-            throw new NotImplementedException();
+            rocksdbPath ??= Directory.GetCurrentDirectory();
+            using var db = _rocksDbService.Load(rocksdbPath);
+            db.DropColumnFamily(name);
         }
 
         /// <summary>
@@ -50,7 +58,15 @@ namespace RocksDbTool.Commands
         /// <param name="rocksdbPath">The path of <see cref="RocksDbSharp.RocksDb"/> to load.</param>
         public void List([Option] string? rocksdbPath = null)
         {
-            throw new NotImplementedException();
+            rocksdbPath ??= Directory.GetCurrentDirectory();
+            var options = new DbOptions();
+            var columnFamilies = RocksDb.ListColumnFamilies(
+                options,
+                rocksdbPath);
+            foreach (var columnFamily in columnFamilies)
+            {
+                _inputOutputErrorContainer.Out.WriteLine(columnFamily);
+            }
         }
     }
 }

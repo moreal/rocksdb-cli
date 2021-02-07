@@ -9,12 +9,15 @@ namespace RocksDbTool.Services
     {
         private readonly DbOptions _options;
 
+        private readonly ColumnFamilyOptions _columnFamilyOptions;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="RocksDbService"/> class.
         /// </summary>
         public RocksDbService()
         {
             _options = new DbOptions();
+            _columnFamilyOptions = new ColumnFamilyOptions();
         }
 
         /// <summary>
@@ -24,7 +27,21 @@ namespace RocksDbTool.Services
         /// <returns>A <see cref="RocksDb"/> instance.</returns>
         public RocksDb Load(string path)
         {
-            return RocksDb.Open(_options, path);
+            var columnFamilies = new ColumnFamilies();
+
+            foreach (var columnFamily in RocksDb.ListColumnFamilies(
+                _options,
+                path))
+            {
+                if (columnFamily is null)
+                {
+                    continue;
+                }
+
+                columnFamilies.Add(columnFamily, new ColumnFamilyOptions());
+            }
+
+            return RocksDb.Open(_options, path, columnFamilies!);
         }
     }
 }
