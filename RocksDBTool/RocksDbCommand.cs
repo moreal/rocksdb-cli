@@ -47,11 +47,11 @@ namespace RocksDbTool
             try
             {
                 using var db = _rocksDbService.Load(rocksdbPath);
-                byte[] keyBytes = ConvertWithInputFormat(inputFormat, key);
+                byte[] keyBytes = inputFormat.Decode(key);
 
                 if (db.Get(keyBytes) is { } valueBytes)
                 {
-                    string value = ConvertWithOutputFormat(outputFormat, valueBytes);
+                    string value = outputFormat.Encode(valueBytes);
                     _inputOutputErrorContainer.Out.Write(value);
                     return 0;
                 }
@@ -83,8 +83,8 @@ namespace RocksDbTool
             try
             {
                 using var db = _rocksDbService.Load(rocksdbPath);
-                byte[] keyBytes = ConvertWithInputFormat(inputFormat, key);
-                byte[] valueBytes = ConvertWithInputFormat(inputFormat, value);
+                byte[] keyBytes = inputFormat.Decode(key);
+                byte[] valueBytes = inputFormat.Decode(value);
                 db.Put(keyBytes, valueBytes);
                 return 0;
             }
@@ -116,7 +116,7 @@ namespace RocksDbTool
             try
             {
                 using var db = _rocksDbService.Load(rocksdbPath);
-                byte[] prefixBytes = ConvertWithInputFormat(inputFormat, prefix);
+                byte[] prefixBytes = inputFormat.Decode(prefix);
 
                 _inputOutputErrorContainer.Error.WriteLine("Key\tValue");
                 using var iterator = db.NewIterator();
@@ -124,9 +124,9 @@ namespace RocksDbTool
                     iterator.Valid() && iterator.Key().Take(prefixBytes.Length).SequenceEqual(prefixBytes);
                     iterator.Next())
                 {
-                    _inputOutputErrorContainer.Out.Write(ConvertWithOutputFormat(outputFormat, iterator.Key()));
+                    _inputOutputErrorContainer.Out.Write(outputFormat.Encode(iterator.Key()));
                     _inputOutputErrorContainer.Out.Write('\t');
-                    _inputOutputErrorContainer.Out.WriteLine(ConvertWithOutputFormat(outputFormat, iterator.Value()));
+                    _inputOutputErrorContainer.Out.WriteLine(outputFormat.Encode(iterator.Value()));
                 }
             }
             catch (Exception e)
@@ -134,20 +134,5 @@ namespace RocksDbTool
                 _inputOutputErrorContainer.Error.WriteLine(e.Message);
             }
         }
-
-        private byte[] ConvertWithInputFormat(InputFormat inputFormat, string value) => inputFormat switch
-        {
-            InputFormat.String => Encoding.UTF8.GetBytes(value),
-            InputFormat.Base64 => Convert.FromBase64String(value),
-            InputFormat.Hex => ByteUtil.ParseHex(value),
-            _ => throw new ArgumentException(nameof(value)),
-        };
-
-        private string ConvertWithOutputFormat(OutputFormat outputFormat, byte[] value) => outputFormat switch
-        {
-            OutputFormat.Base64 => Convert.ToBase64String(value),
-            OutputFormat.Hex => ByteUtil.Hex(value),
-            _ => throw new ArgumentException(nameof(value)),
-        };
     }
 }
