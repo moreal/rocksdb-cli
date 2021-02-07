@@ -72,10 +72,10 @@ namespace RocksDbTool.Tests.Commands
                     Assert.NotNull(db.GetColumnFamily(columnFamily.ToString()));
                 }
 
-                _command.Create(columnFamily.ToString(), rocksdbPath: _temporaryDirectory);
+                _command.Remove(columnFamily.ToString(), rocksdbPath: _temporaryDirectory);
                 using (var db = _rocksDbService.Load(_temporaryDirectory))
                 {
-                    Assert.Null(db.GetColumnFamily(columnFamily.ToString()));
+                    Assert.Throws<KeyNotFoundException>(() => db.GetColumnFamily(columnFamily.ToString()));
                 }
             }
         }
@@ -84,7 +84,9 @@ namespace RocksDbTool.Tests.Commands
         public void List()
         {
             _command.List(_temporaryDirectory);
-            Assert.Equal(string.Join("\n", _columnFamilies), _stringInputOutputErrorContainer.Out.ToString());
+            Assert.Equal(
+                "default\n" + string.Join("\n", _columnFamilies) + "\n",
+                _stringInputOutputErrorContainer.Out.ToString());
         }
 
         private RocksDb OpenRocksDb(string path)
