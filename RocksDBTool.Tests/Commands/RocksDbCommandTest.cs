@@ -140,7 +140,8 @@ namespace RocksDbTool.Tests.Commands
         {
             _command.Remove(
                 key: key,
-                inputFormat: inputFormat);
+                inputFormat: inputFormat,
+                rocksdbPath: _temporaryDirectory);
             using var db = OpenRocksDb(_temporaryDirectory);
             Assert.Null(db.Get(inputFormat.Decode(key)));
         }
