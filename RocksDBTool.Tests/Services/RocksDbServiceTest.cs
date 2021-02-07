@@ -49,7 +49,10 @@ namespace RocksDbTool.Tests.Services
 
         public void Dispose()
         {
-            Directory.Delete(_temporaryDirectory, true);
+            if (Directory.Exists(_temporaryDirectory))
+            {
+                Directory.Delete(_temporaryDirectory, true);
+            }
         }
     }
 }
