@@ -6,7 +6,7 @@
     <IsPackable>false</IsPackable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <RootNamespace>RocksDbTool.Tests</RootNamespace>
-    <CodeAnalysisRuleSet>..\RocksDBTool.Tests.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\RocksDbTool.Tests.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,7 +23,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
 
-    <ProjectReference Include="..\RocksDBTool\RocksDBTool.csproj" />
+    <ProjectReference Include="..\RocksDbTool\RocksDbTool.csproj" />
   </ItemGroup>
 
 </Project>
