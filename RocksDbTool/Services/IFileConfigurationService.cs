@@ -16,7 +16,7 @@ namespace RocksDbTool.Services
         /// Loads the json configuration.
         /// </summary>
         /// <returns>An instance of <typeparamref name="T"/>.</returns>
-        T Load();
+        T? Load();
 
         /// <summary>
         /// Stores the <paramref name="configuration"/> into file.

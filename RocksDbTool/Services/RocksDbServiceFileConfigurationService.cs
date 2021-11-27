@@ -39,9 +39,11 @@ namespace RocksDbTool.Services
         public string Path { get; }
 
         /// <inheritdoc cref="IFileConfigurationService{T}.Load"/>
-        public RocksDbServiceConfiguration Load()
+        public RocksDbServiceConfiguration? Load()
         {
-            return JsonSerializer.Deserialize<RocksDbServiceConfiguration>(File.ReadAllText(Path));
+            return File.ReadAllText(Path) is not { } text
+                ? null
+                : JsonSerializer.Deserialize<RocksDbServiceConfiguration>(text);
         }
 
         /// <inheritdoc cref="IFileConfigurationService{T}.Store"/>
