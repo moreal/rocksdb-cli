@@ -24,6 +24,8 @@ namespace RocksDbTool.Tests.Commands
             _temporaryDirectory = Path.Combine(
                 Path.GetTempPath(),
                 Guid.NewGuid().ToString());
+
+            _rocksDbService = new RocksDbService();
             SetupRocksDb(_temporaryDirectory, new Dictionary<string, string>
             {
                 ["string"] = "foo",
@@ -32,8 +34,14 @@ namespace RocksDbTool.Tests.Commands
             {
                 [new byte[] { 0xde, 0xad }] = new byte[] { 0xbe, 0xef },
             });
+            SetupRocksDb(
+                _temporaryDirectory,
+                new Dictionary<string, string>
+                {
+                    ["foo"] = "bar",
+                },
+                "column-family");
 
-            _rocksDbService = new RocksDbService();
             _stringInputOutputErrorContainer = new StringInputOutputErrorContainer(
                 new StringReader(string.Empty),
                 new StringWriter(),
@@ -142,36 +150,56 @@ namespace RocksDbTool.Tests.Commands
                 key: key,
                 inputFormat: inputFormat,
                 rocksdbPath: _temporaryDirectory);
-            using var db = OpenRocksDb(_temporaryDirectory);
+            using var db = _rocksDbService.Load(_temporaryDirectory);
             Assert.Null(db.Get(inputFormat.Decode(key)));
         }
 
-        private void SetupRocksDb(string path, IEnumerable<KeyValuePair<string, string>> pairs)
+        private void SetupRocksDb(string path, IEnumerable<KeyValuePair<string, string>> pairs, string columnFamily = "default")
         {
             using var db = OpenRocksDb(path);
+            var cf = CreateColumnFamilyIfMissing(db, columnFamily);
             foreach (var pair in pairs)
             {
                 db.Put(
                     pair.Key,
-                    pair.Value);
+                    pair.Value,
+                    cf);
             }
         }
 
-        private void SetupRocksDb(string path, IEnumerable<KeyValuePair<byte[], byte[]>> pairs)
+        private void SetupRocksDb(string path, IEnumerable<KeyValuePair<byte[], byte[]>> pairs, string columnFamily = "default")
         {
             using var db = OpenRocksDb(path);
+            var cf = CreateColumnFamilyIfMissing(db, columnFamily);
             foreach (var pair in pairs)
             {
                 db.Put(
                     pair.Key,
-                    pair.Value);
+                    pair.Value,
+                    cf);
+            }
+        }
+
+        private ColumnFamilyHandle CreateColumnFamilyIfMissing(RocksDb db, string columnFamily)
+        {
+            try
+            {
+                return db.GetColumnFamily(columnFamily);
+            }
+            catch
+            {
+                var options = new ColumnFamilyOptions();
+                return db.CreateColumnFamily(options, columnFamily);
             }
         }
 
         private RocksDb OpenRocksDb(string path)
         {
             var options = new DbOptions().SetCreateIfMissing();
-            return RocksDb.Open(options, path);
+            var db = RocksDb.Open(options, path);
+            db.Dispose();
+
+            return _rocksDbService.Load(path);
         }
     }
 }
